@@ -1,20 +1,102 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Start } from "./screens/Start";
+import { Services } from "./screens/Services";
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import { Roadmap } from "./screens/Roadmap";
+import { Downloads } from "./screens/Downloads";
+import { Contact } from "./screens/Contact";
 
-export default function App() {
+const { Navigator, Screen } = createBottomTabNavigator();
+
+function MyTabs() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarLabelPosition: "below-icon",
+        tabBarLabelStyle: {
+          marginBottom: 10,
+        },
+        tabBarActiveTintColor: "darkblue",
+        tabBarInactiveTintColor: "black",
+        tabBarStyle: {
+          // position: "absolute",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          bottom: 0,
+          height: 62,
+          borderTopWidth: 0,
+          backgroundColor: "white",
+        },
+      }}
+    >
+      <Screen
+        name="Start"
+        component={Start}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="play" size={18} color={color} />
+          ),
+          tabBarLabel: "Início",
+        }}
+      />
+      <Screen
+        name="Services"
+        component={Services}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="home-repair-service" size={18} color={color} />
+          ),
+          tabBarLabel: "Serviços",
+        }}
+      />
+
+      <Screen
+        name="Roadmap"
+        component={Roadmap}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="typewriter" size={18} color={color} />
+          ),
+          tabBarLabel: "Roteiro",
+        }}
+      />
+
+      <Screen
+        name="Downloads"
+        component={Downloads}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Entypo name="download" size={18} color={color} />
+          ),
+          tabBarLabel: "Downloads",
+        }}
+      />
+
+      <Screen
+        name="Contact"
+        component={Contact}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="contact-support" size={24} color={color} />
+          ),
+          tabBarLabel: "Contato",
+        }}
+      />
+    </Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
+  );
+}
